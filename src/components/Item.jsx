@@ -10,6 +10,7 @@ import {
   saveChangeItemSuccess,
   saveChangeItemFailure
 } from '../action/ActionCreators';
+import miniLoader from '../assets/miniLoader.svg';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 
@@ -41,7 +42,7 @@ const saveChangeItem = async(dispatch, data) => {
 
 const Item = ({history, match}) => {
   const dispatch = useDispatch();
-  const {loading, error, item} = useSelector(store => store.item);
+  const {loading, miniLoading, error, item} = useSelector(store => store.item);
 
   useEffect(() => {
     getFetchItem(dispatch, match.params.id);
@@ -74,19 +75,38 @@ const Item = ({history, match}) => {
     <form className='Form' onSubmit={onSubmitHandler}>
       <div className='InputWrap'>
         <label htmlFor='name'>Название</label>
-        <input id='name' name='name' value={item.name} onChange={onInputHandler} />
+        <input id='name' name='name' disabled={miniLoading} value={item.name} onChange={onInputHandler} />
       </div>
       <div className='InputWrap'>
         <label htmlFor='price'>Название</label>
-        <input id='price' name='price' value={item.price} onChange={onInputHandler} />
+        <input id='price' name='price' disabled={miniLoading} value={item.price} onChange={onInputHandler} />
       </div>
       <div className='InputWrap'>
         <label htmlFor='content'>Название</label>
-        <input id='content' name='content' value={item.content} onChange={onInputHandler} />
+        <input id='content' name='content' disabled={miniLoading} value={item.content} onChange={onInputHandler} />
       </div>
       <div className='FormBtnWrap'>
-        <button type='button' className='Btn' onClick={cancelEdit}>Отмена</button>
-        <button type='submit' className='Btn'>Сохранить</button>
+        <button
+         className={`Btn ${miniLoading ? 'btnDisabled' : ''}`}
+         type='button'
+         disabled={miniLoading}
+           onClick={cancelEdit}
+          >
+            Отмена
+          </button>
+        <button
+         className={`Btn ${miniLoading ? 'btnDisabled' : ''}`}
+         disabled={miniLoading}
+         type='submit'
+         >
+           {miniLoading ? 
+           <img
+             className='disabled'
+             src={miniLoader}
+             alt='loader'
+            /> : 
+            'Сохранить'}
+            </button>
       </div>
     </form>
   )

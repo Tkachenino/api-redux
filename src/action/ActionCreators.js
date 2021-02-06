@@ -39,8 +39,8 @@ export function fetchItemFailure() {
   return { type: FETCH_ITEM_FAILURE }
 }
 
-export function deleteListItemRequest() {
-  return { type: DELETE_LIST_ITEM_REQUEST }
+export function deleteListItemRequest(id) {
+  return { type: DELETE_LIST_ITEM_REQUEST, payload: { id } }
 }
 
 export function deleteListItemSuccess(id) {

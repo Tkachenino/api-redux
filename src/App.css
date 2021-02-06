@@ -75,10 +75,24 @@ input {
 .Btn:focus {
   background-color: #db3949d2;
 }
+.BtnEdit.btnDisabled {
+  display: none;
+}
+
+.btnDisabled {
+  cursor: not-allowed;
+  background-color: #db3949d2;
+}
 
 .Btn img {
   fill: white;
   width: 15px;
+}
+
+.Btn img.disabled {
+  fill: white;
+  width: 28px;
+  height: 28px;
 }
 
 .Error {

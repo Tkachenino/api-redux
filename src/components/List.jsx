@@ -12,6 +12,7 @@ import {
 import Error from './Error';
 import Loader from './Loader';
 import pencil from '../assets/pencil.svg';
+import miniLoader from '../assets/miniLoader.svg';
 import cross from '../assets/cross.svg';
 
 const getFetchItem = async(dispatch) => {
@@ -27,7 +28,7 @@ const getFetchItem = async(dispatch) => {
 
 const getDeleteItem = async(dispatch, id) => {
   
-    dispatch(deleteListItemRequest());
+    dispatch(deleteListItemRequest(id));
     try {
     await fetch(`http://localhost:7070/api/services/${id}`, {
       method: "DELETE"
@@ -70,11 +71,23 @@ const List = ({history}) => {
         <div className='ListItem' key={item.id}>
         <p>{item.name}: {item.price} руб.</p>
         <div className='BtnWrap'>
-          <button className='Btn BtnEdit' onClick={() => {editItem(item.id)}}>
+          <button
+           className={`Btn BtnEdit ${item.loading ? 'btnDisabled' : ''}`}
+           disabled={item.loading}
+           onClick={() => {editItem(item.id)}}
+           >
             <img src={pencil} alt='pencel' />
           </button>
-          <button className='Btn BtnDelete' onClick={() => {deleteItem(item.id)}}>
-            <img src={cross} alt='cross' />
+          <button
+           className={`Btn BtnDelete ${item.loading ? 'btnDisabled' : ''}`}
+           disabled={item.loading}
+           onClick={() => {deleteItem(item.id)}}
+           >
+            <img
+             className={item.loading ? 'disabled' : ''}
+             src={item.loading ? miniLoader: cross}
+             alt='cross'
+            />
             </button>
         </div>
       </div>

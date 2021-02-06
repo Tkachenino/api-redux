@@ -20,13 +20,22 @@ export const listReducer = (store = initialStore, action) => {
     }
     case FETCH_LIST_ITEM_SUCCESS: {
       const { items } = action.payload;
-      return {...store, items, loading: false}
+      const itemWihLoader = items.map(i => ({...i, loading: false}))
+      return {...store, items: itemWihLoader, loading: false}
     }
     case FETCH_LIST_ITEM_FAILURE: {
       return {...store, loading: false, error: true}
     }
     case DELETE_LIST_ITEM_REQUEST: {
-      return {...store, loading: true, error: false}
+      const { id } = action.payload;
+      return {...store, items: [...store.items.map((i) => {
+        if (i.id === id) {
+         return {...i, loading: true}
+        } else {
+          return i
+        }
+        
+      })], loading: false, error: false}
     }
     case DELETE_LIST_ITEM_SUCCESS: {
       const { id } = action.payload;

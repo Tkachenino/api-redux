@@ -11,6 +11,7 @@ import {
 
 const initialStore = {
   loading: true,
+  miniLoading: false,
   error: false,
   item: {
     name: "",
@@ -39,13 +40,13 @@ export const ItemReducer = (store = initialStore, action) => {
       return initialStore;
     }
     case SAVE_CHANGE_ITEM_REQUEST: {
-      return {...store, loading: true, error: false}
+      return {...store, miniLoading: true, error: false}
     }
     case SAVE_CHANGE_ITEM_SUCCESS: {
-      return  {...store, loading: false}
+      return  {...store, miniLoading: false}
     }
     case SAVE_CHANGE_ITEM_FAILURE: {
-      return {...store, loading: false, error: true};
+      return {...store, miniLoading: false, error: true};
     }
     default: {
       return store;
